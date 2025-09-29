@@ -16,8 +16,8 @@ pipeline {
             steps {
                 withSonarQubeEnv('SonarCloud') {
                     bat "${scannerHome}\\bin\\sonar-scanner.bat " +
-                        "-Dsonar.projectKey=your_project_key " +
-                        "-Dsonar.organization=your_organization_key"
+                        "-Dsonar.projectKey=anjum613_spring-boot-demo " +
+                        "-Dsonar.organization=anjum613"
                 }
             }
         }
