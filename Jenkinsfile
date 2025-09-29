@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        scannerHome = tool 'SonarQubeScanner'  // the name of the SonarQube Scanner you set in Jenkins global tool config
+        scannerHome = tool 'SonarQubeScanner'
     }
 
     stages {
@@ -15,7 +15,7 @@ pipeline {
         stage('SonarCloud Analysis') {
             steps {
                 withSonarQubeEnv('SonarCloud') {
-                    bat "${scannerHome}/bin/sonar-scanner.bat"
+                    bat "${scannerHome}\\bin\\sonar-scanner.bat"
                 }
             }
         }
