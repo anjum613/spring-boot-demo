@@ -14,8 +14,8 @@ pipeline {
 
         stage('Test') {
             steps {
-                // Run tests and generate JaCoCo XML report
-                bat 'mvn test jacoco:report'
+                // Run full Maven lifecycle to trigger JaCoCo prepare-agent and report
+                bat 'mvn clean verify'
             }
             post {
                 always {
