@@ -21,8 +21,7 @@ pipeline {
                 always {
                     // Publish test results
                     junit 'target/surefire-reports/*.xml'
-                    // Publish JaCoCo coverage report to Jenkins
-                    jacoco execPattern: 'target/jacoco.exec'
+                    // (Removed deprecated jacoco step)
                 }
             }
         }
