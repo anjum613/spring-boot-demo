@@ -12,20 +12,30 @@ pipeline {
             }
         }
 
-    stage('SonarCloud Analysis') {
-        steps {
-            withSonarQubeEnv('SonarCloud') {
-                bat "${scannerHome}\\bin\\sonar-scanner.bat " +
-                    "-Dsonar.projectKey=anjum613_spring-boot-demo " +
-                    "-Dsonar.organization=anjum613 " +
-                    "-Dsonar.java.binaries=target/classes"
-            }
-        }
-    }
-
         stage('Test') {
             steps {
-                bat 'mvn test'
+                // Run tests with JaCoCo agent to generate coverage data
+                bat 'mvn test -Djacoco.dataFile=target/jacoco.exec'
+            }
+            post {
+                always {
+                    // Publish test results
+                    junit 'target/surefire-reports/*.xml'
+                    // Publish JaCoCo coverage report to Jenkins
+                    jacoco execPattern: 'target/jacoco.exec'
+                }
+            }
+        }
+
+        stage('SonarCloud Analysis') {
+            steps {
+                withSonarQubeEnv('SonarCloud') {
+                    bat "\"${scannerHome}\\bin\\sonar-scanner.bat\" " +
+                        "-Dsonar.projectKey=anjum613_spring-boot-demo " +
+                        "-Dsonar.organization=anjum613 " +
+                        "-Dsonar.java.binaries=target/classes " +
+                        "-Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml"
+                }
             }
         }
     }
