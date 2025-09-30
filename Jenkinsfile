@@ -14,14 +14,13 @@ pipeline {
 
         stage('Test') {
             steps {
-                // Run tests with JaCoCo agent to generate coverage data
-                bat 'mvn test -Djacoco.dataFile=target/jacoco.exec'
+                // Run tests and generate JaCoCo XML report
+                bat 'mvn test jacoco:report'
             }
             post {
                 always {
                     // Publish test results
                     junit 'target/surefire-reports/*.xml'
-                    // (Removed deprecated jacoco step)
                 }
             }
         }
