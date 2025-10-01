@@ -8,18 +8,16 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                bat 'mvn clean package'
+                bat 'mvn clean package -DskipTests'
             }
         }
 
-        stage('Test') {
+        stage('Test & Coverage') {
             steps {
-                // Run full Maven lifecycle to trigger JaCoCo prepare-agent and report
-                bat 'mvn clean verify'
+                bat 'mvn verify'
             }
             post {
                 always {
-                    // Publish test results
                     junit 'target/surefire-reports/*.xml'
                 }
             }
