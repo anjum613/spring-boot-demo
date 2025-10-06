@@ -56,7 +56,7 @@
 
     <build>
         <plugins>
-            <!-- Compile to Java 17 bytecode -->
+       
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -66,7 +66,7 @@
                 </configuration>
             </plugin>
 
-            <!-- OWASP Dependency Check Plugin for security scanning -->
+        
             <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
@@ -80,7 +80,7 @@
                 </executions>
             </plugin>
 
-            <!-- JaCoCo plugin: prepare agent and generate report -->
+
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -93,16 +93,16 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>report</id> <!-- Changed ID for clarity -->
+                        <id>report</id> 
                         <phase>verify</phase>
                         <goals>
-                            <goal>report</goal> <!-- This one goal generates both HTML and XML -->
+                            <goal>report</goal> 
                         </goals>
                     </execution>
                 </executions>
             </plugin>
 
-            <!-- Surefire plugin (uses JaCoCo argLine automatically) -->
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
