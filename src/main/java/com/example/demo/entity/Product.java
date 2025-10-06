@@ -11,6 +11,20 @@ public class Product {
     private double price;
     private int quantity;
 
+    // FIX: Add this empty constructor.
+    // It's required by JPA/Hibernate to create instances of the entity.
+    public Product() {
+    }
+
+    // FIX: Add this constructor with all the fields.
+    // This will resolve the error in your test class.
+    public Product(Long id, String name, double price, int quantity) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
     // Getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

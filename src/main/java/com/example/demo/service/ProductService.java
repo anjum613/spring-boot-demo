@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductService {
+public class ProductService implements IProductService {
     private final ProductRepository productRepository;
 
     public ProductService(ProductRepository productRepository) {

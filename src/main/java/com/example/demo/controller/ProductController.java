@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Product;
-import com.example.demo.service.ProductService;
+import com.example.demo.service.IProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,13 +11,13 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v1")
 public class ProductController {
-    private final ProductService productService;
+    private final IProductService productService;
 
-    public ProductController(ProductService productService) {
+    public ProductController(IProductService productService) {
         this.productService = productService;
     }
 
-    @PostMapping("/product")
+    @PostMapping("/products")
     public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
         Product newProduct = productService.saveProduct(product);
         return ResponseEntity.ok(newProduct);

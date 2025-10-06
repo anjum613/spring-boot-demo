@@ -2,36 +2,47 @@ pipeline {
     agent any
 
     environment {
-        // SonarScanner tool installation name in Jenkins
         scannerHome = tool 'SonarQubeScanner'
     }
 
     stages {
         stage('Build') {
             steps {
-                bat 'mvn clean package -DskipTests'
+                bat 'mvn clean compile'
             }
         }
 
         stage('Test & Coverage') {
             steps {
-                bat 'mvn verify'
+                bat 'mvn test jacoco:report'
             }
             post {
                 always {
-                    junit 'target/surefire-reports/*.xml'
+                    publishTestResults testResultsPattern: 'target/surefire-reports/*.xml'
+                    publishHTML([
+                        allowMissing: false,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,
+                        reportDir: 'target/site/jacoco',
+                        reportFiles: 'index.html',
+                        reportName: 'JaCoCo Coverage Report'
+                    ])
                 }
+            }
+        }
+
+        stage('Package') {
+            steps {
+                bat 'mvn package -DskipTests'
             }
         }
 
         stage('SonarCloud Analysis') {
             environment {
-                // Inject the SonarCloud token stored as global credential ID sonarcloud-token
                 SONAR_TOKEN = credentials('sonarcloud-token')
             }
             steps {
                 withSonarQubeEnv('SonarCloud') {
-                    // Use the SonarScanner bundled with Jenkins, passing authentication and coverage XML
                     bat "\"${scannerHome}\\bin\\sonar-scanner.bat\" " +
                         "-Dsonar.projectKey=anjum613_spring-boot-demo " +
                         "-Dsonar.organization=anjum613 " +
