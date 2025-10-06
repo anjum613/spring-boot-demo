@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-class ProductServiceTest {
+public class ProductServiceTest {
     @Mock
     private ProductRepository productRepository;
 
@@ -24,12 +24,12 @@ class ProductServiceTest {
     private ProductService productService;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    void testSaveProduct() {
+    public void testSaveProduct() {
         Product product = new Product(null, "Test Product", 10.0, 5);
         Product saved = new Product(1L, "Test Product", 10.0, 5);
         when(productRepository.save(any(Product.class))).thenReturn(saved);
@@ -39,7 +39,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void testGetAllProducts() {
+    public void testGetAllProducts() {
         Product p1 = new Product(1L, "A", 1.0, 1);
         Product p2 = new Product(2L, "B", 2.0, 2);
         when(productRepository.findAll()).thenReturn(Arrays.asList(p1, p2));
@@ -48,7 +48,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void testGetProductById() {
+    public void testGetProductById() {
         Product p = new Product(1L, "A", 1.0, 1);
         when(productRepository.findById(1L)).thenReturn(Optional.of(p));
         Optional<Product> result = productService.getProductById(1L);
@@ -57,7 +57,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void testUpdateProduct() {
+    public void testUpdateProduct() {
         Product existing = new Product(1L, "A", 1.0, 1);
         Product update = new Product(1L, "B", 2.0, 2);
         when(productRepository.findById(1L)).thenReturn(Optional.of(existing));
@@ -68,7 +68,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void testDeleteProduct() {
+    public void testDeleteProduct() {
         doNothing().when(productRepository).deleteById(1L);
         productService.deleteProduct(1L);
         verify(productRepository, times(1)).deleteById(1L);
